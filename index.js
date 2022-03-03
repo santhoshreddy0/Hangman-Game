@@ -1,4 +1,21 @@
-const words=['apple','book','cat','pencil'];
+var words=['apple','banana','car'];
+const f=async ()=>{
+    const list=await fetch("./common.json");
+    const json=await list.json();
+    words=json.commonWords;
+    return json.commonWords;
+}
+f().then(load,nload);
+function load(e){
+    words=e;
+    // console.log('loaded',words);
+    startgame();
+
+}
+function nload(){
+    console.log('not loaded');
+}
+
 let randomWord=words[Math.floor(Math.random()*words.length)];
 console.log(randomWord);
 const visitedArray=[];
@@ -54,6 +71,7 @@ function updateIncorrectChar(){
     
     if(wrongChar.length==hangmanBody.length){
         document.getElementById('final-message').innerHTML="You loss the game"
+        document.getElementById('showword').innerHTML=`correct word is:${randomWord}`
         document.getElementById('popup-container').style.display='block';
         
         overgame();
@@ -88,21 +106,25 @@ function addevent(e){
     }
 }
 
-
- document.getElementById('play-button').addEventListener('click',()=>{
-    wrongChar.splice(0);
-    correctChar.splice(0);
-    visitedArray.splice(0);
-    console.log(wrongChar);
-    document.getElementById('popup-container').style.display='none';
-   
-    document.getElementById('word').innerHTML='';
-    randomWord=words[Math.floor(Math.random()*words.length)];
-    console.log(randomWord);
-    showDashes();    
-    window.addEventListener('keydown',addevent);
-    updateIncorrectChar();
- })
+function startgame(){
+    
+    document.getElementById('play-button').addEventListener('click',()=>{
+        document.getElementById('showword').innerHTML='';
+        wrongChar.splice(0);
+        correctChar.splice(0);
+        visitedArray.splice(0);
+        console.log(wrongChar);
+        document.getElementById('popup-container').style.display='none';
+    
+        document.getElementById('word').innerHTML='';
+        randomWord=words[Math.floor(Math.random()*words.length)];
+        console.log(randomWord);
+        showDashes();    
+        window.addEventListener('keydown',addevent);
+        updateIncorrectChar();
+    })
+}
 function overgame(){
+    
     window.removeEventListener('keydown',addevent);
 }

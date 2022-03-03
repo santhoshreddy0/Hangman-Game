@@ -27,10 +27,6 @@ body {
 }
 .word {
     display: flex;
-    
-    
-    
-    
   }
 .figure-part,#popup-container,#notification-container{
     display:none;
@@ -55,5 +51,8 @@ h1{
     bottom: 0;
     right: 0;
     z-index:999; 
-   
+   font-weight: 700;
+}
+.won{
+  color: green;
 }
